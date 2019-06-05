@@ -1,0 +1,20 @@
+
+<launch>
+    
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+    </include>
+
+    <node pkg="tf" type="static_transform_publisher"  name="lidar_to_world"
+      args="0 0 0 0 0 0 1 /world /velodyne 10" />
+
+    <node pkg="lidar_tracking" type="solo_lidar_voxel" name="solo_lidar_filter" output="screen" />
+
+    <node pkg="lidar_tracking" type="lidar_segment" name="lidar_segmentation" output="screen" />
+
+    <node pkg="lidar_tracking" type="lidar_sparse" name="lidar_sparse" output="screen" />
+
+    <node pkg="lidar_tracking" type="lidar_ec" name="lidar_ec" output="screen" />
+
+    <node pkg="lidar_tracking" type="lidar_tracking" name="lidar_particle_filter" output="screen" />
+
+</launch>
