@@ -1,0 +1,19 @@
+
+<launch>
+    <include file="$(find openni_launch)/launch/openni.launch">
+        <arg name="depth_registration" default="true"/>
+    </include>
+    
+    <node pkg="tf" type="static_transform_publisher"  name="camera_to_world"
+      args="0 0 0 0 0 0 1 /world /camera_link 10" />
+
+    <node pkg="kinect_tracking" type="kinect_voxel" name="solo_kinect_voxel" output="screen" />
+
+    <node pkg="kinect_tracking" type="kinect_color" name="kinect_color_filter" output="screen" />
+
+    <node pkg="kinect_tracking" type="kinect_sparse" name="kinect_sparse_filter" output="screen" />
+
+    <node pkg="kinect_tracking" type="kinect_tracking" name="kinect_tracking" output="screen" />
+
+
+</launch>
