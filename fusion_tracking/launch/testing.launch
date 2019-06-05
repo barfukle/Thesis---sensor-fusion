@@ -1,0 +1,16 @@
+<launch>
+    <include file="$(find openni_launch)/launch/openni.launch">
+        <arg name="depth_registration" default="true"/>
+    </include>
+
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+    </include>
+
+    <node pkg="tf" type="static_transform_publisher"  name="lidar_to_world"
+      args="0 0 0 0 0 0 1 /world /velodyne 10" />
+    
+    <node pkg="tf" type="static_transform_publisher"  name="camera_to_world"
+      args="0 0 0 0 0 0 1 /world /camera_link 10" />
+
+
+</launch>

@@ -1,0 +1,33 @@
+
+<launch>
+    <include file="$(find openni_launch)/launch/openni.launch">
+        <arg name="depth_registration" default="true"/>
+    </include>
+
+    <include file="$(find velodyne_pointcloud)/launch/VLP16_points.launch">
+    </include>
+
+    <node pkg="tf" type="static_transform_publisher"  name="lidar_to_world"
+      args="0 0 0 0 0 0 1 /world /velodyne 10" />
+    
+    <node pkg="tf" type="static_transform_publisher"  name="camera_to_world"
+      args="0 0 0 0 0 0 1 /world /camera_link 10" />
+
+    <node pkg="fusion_tracking" type="voxel_kinect" name="fusion_kin_vox" output="screen" />
+
+    <node pkg="fusion_tracking" type="voxel_lidar" name="fusion_lid_vox" output="screen" />
+
+    <node pkg="fusion_tracking" type="fusion_icp" name="fusion_icp" output="screen" />
+
+    <node pkg="fusion_tracking" type="com_seg" name="fusion_seg" output="screen" />
+
+    <node pkg="fusion_tracking" type="com_ec" name="fusion_ec" output="screen" />
+
+    <node pkg="fusion_tracking" type="com_sizecomp" name="fusion_size_compare" output="screen" />
+
+    <node pkg="fusion_tracking" type="fusion_tracking" name="fusion_pf" output="screen" />
+
+    <node pkg="fusion_tracking" type="fusion_synchronizer" name="fusion_synchronizer" output="screen" />
+
+
+</launch>
